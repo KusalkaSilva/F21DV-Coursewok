@@ -1,0 +1,95 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 22/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+  <title>F21DV Lab1 - Exercise 16</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+ 
+    <script> 
+        const width  = 700; 
+        const height = 500; 
+         
+        const data   = [10, 15, 20, 25, 30]; 
+
+        // Note different valid ways of specifying color
+        // Array of colors for circle shapes 
+        const colors = ['#ffffcc','red','rgb(0,255,0)','#31a354','#006837']; 
+        // Array of colors for rectangle shapes
+        const rect_colors = ['#6495ed','cyan','rgb(255,127,80)','#ccccff','#ffbf00']
+         
+        // Create SVG element
+        const svg = d3.select("body") 
+                    .append("svg") 
+                    .attr("width", width) 
+                    .attr("height", height); 
+        
+        // g element groups SVG shapes together
+        const g = svg.selectAll("g") 
+                    .data(data) 
+                    .enter() 
+                    .append("g") 
+                    .attr("transform", function(d, i) { 
+                        return "translate(0,0)"; //position
+                    }) 
+         
+        // add circle shape
+        g.append("circle")
+          // start positions
+          .attr("cx", function(d, i) { 
+            return i*100 + 50; 
+          }) 
+          .attr("cy", function(d, i) { 
+            return 100; 
+          }) 
+          //radius
+          .attr("r", function(d) { 
+            return d*1.5; 
+          })
+          //fill color 
+          .attr("fill", function(d, i){ 
+            return colors[i]; 
+          })
+          .attr("opacity", 0.8); //transparency
+         
+        // add rectangle shape
+        g.append("rect")
+        //starting positions
+         .attr("x", function(d, i){
+             return i*100 + 30
+         }) 
+         .attr("y", function(d, i){
+             return 80;
+         })
+         // dimensions of the rectangle
+         .attr("width", 20) 
+         .attr("height", 20)
+         // fill color 
+         .attr("fill", function(d, i){
+             return rect_colors[i];
+        })
+        .attr("opacity", 0.8); 
+    
+        // add text
+        g.append("text")
+        // position 
+         .attr("x", function(d, i) { 
+            return i * 100 + 40; 
+         }) 
+         .attr("y", 105)
+         .attr("stroke", "black") // text outline color
+         .attr("font-size", "15px") //font size
+         .attr("font-family", "sans-serif") //font type
+         .style("fill", "black") // font color
+         .text(function(d) { 
+            return d; 
+         }); 
+        </script> 
+</body> 
+</html> 

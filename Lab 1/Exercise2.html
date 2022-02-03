@@ -1,0 +1,50 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 11/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>
+    <title>F21DV Lab1 - Exercise 2</title> 
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+    <style>
+        /* Animation function*/
+        @keyframes animate{
+            from {background-color:seagreen;}
+            to {background-color:burlywood;}
+        }
+    </style>
+</head> 
+<body> 
+    <p>First paragraph</p> 
+    <p>Second paragraph</p> 
+
+    <script> 
+    // only select the first "p" element
+    d3.select("p")
+    //Below styles will only affect the first "p" element 
+    // Change the text color to Red
+    .style("color", "red")
+    // Font type is given as "Lucida Handwriting", if its not availabe in the browser then "Verdana" will be the second option, and "sans-serif" is the thrird option
+    .style("font-family", "Lucida Handwriting", "Verdana", "sans-serif")
+    //Font size
+    .style("font-size", "40px")
+    // To make the paragrapgh italic
+    .style("font-style", "italic")
+    // Thickness of the letters
+    .style("font-weight", "bold")
+    // Text is aligned to the center
+    .style("text-align", "center")
+    // Line spacing between the second line
+    .style("line-height", "1")
+    // Space between the letters
+    .style("letter-spacing", "0.3em")
+    //Animation
+    .style("animation-name", "animate")
+    .style("animation-duration", "10s");
+    </script> 
+
+</body> 
+</html> 

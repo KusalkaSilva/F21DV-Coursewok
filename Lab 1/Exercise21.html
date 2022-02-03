@@ -1,0 +1,86 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 26/01/2022 
+-->
+
+<!doctype html>
+<html>
+<head>
+    <title>F21DV Lab1 - Exercise 21</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+<body>
+    <svg width="400" height="600"></svg>
+<script>
+    //Reference - https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js
+
+    //Create SVG element
+    var svg = d3.select("svg"),
+        width = svg.attr("width") - 100 ,
+        height = svg.attr("height") - 300
+
+    var csvfile = "./Files/Exercise18.csv";
+
+    d3.csv(csvfile).then(function(data) {
+
+            //scaleBand splits the range into 6 bands (no. of values in the domain array)
+        var xScale = d3.scaleBand().domain(data.map(function(d) { return d.index; })).range([0, width]),
+            yScale = d3.scaleLinear().domain([0, d3.max(data, function(d) { return d.values; })]).range([height, 10]);
+
+        var g = svg.append("g")
+               .attr("transform", "translate(" + 70 + "," + 50 + ")"); //x position, y position
+
+        // Display x-axis
+        g.append("g")
+         .attr("transform", "translate(0," + height + ")")
+         .attr("stroke-width", 2)
+         .call(d3.axisBottom(xScale))
+         // x-axis label
+         .append("text")
+         // text position
+         .attr("y", 40)
+         .attr("x", 150)
+         .attr("letter-spacing", "0.2em")
+         .attr("fill", "black")
+         .style("font-size", 15)
+         .text("Index");
+
+        // Display y-axis
+        g.append("g")
+            .attr("stroke-width", 2)
+         .call(d3.axisLeft(yScale).tickFormat(function(d){
+             return d;
+         }))
+         // y-axis label
+         .append("text")
+         // text rotation
+         .attr("transform", "rotate(-90)")
+         // text position
+         .attr("y", -40)
+         .attr("x", -115)
+         .attr("fill", "black")
+         .attr("letter-spacing", "0.2em")
+         .style("font-size", 15)
+         .text("Values");
+
+        // Plotting the bar chart using rect shapes
+        g.selectAll("rect")
+         .data(data)
+         .enter().append("rect")
+         //position
+         .attr("x", function(d) { 
+             return xScale(d.index); 
+            })
+         .attr("y", function(d) { 
+             return yScale(d.values); 
+            })
+        // dimensions of the rectangles
+         .attr("width", xScale.bandwidth()) //.bandwidth gets the width of the band
+         .attr("height", function(d) { return height - yScale(d.values); })
+         .attr("fill", "lightblue")
+         .attr("stroke", "black");
+    });
+
+</script>
+</body>
+</html>

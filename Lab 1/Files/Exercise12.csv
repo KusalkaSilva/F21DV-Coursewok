@@ -1,0 +1,5 @@
+﻿shape,height,width,positionX,positionY,color
+rectangle,100,200,20,20,red
+circle,0,50,250,300,cyan
+line,150,250,350,200,blue
+eclipse,50,100,150,200,orange

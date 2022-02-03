@@ -1,0 +1,39 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 16/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab1 - Exercise 8</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+    <script> 
+        //array with mixed data types ("string & number") 
+        var myData = ["a", 4, 1, "b", 6, 2, 8, 9, "z" ]; 
+      
+        var p = d3.select("body")
+                   .selectAll("span") 
+                   .data(myData)
+                   //adds a span tag if it isn't in the body tag 
+                   .enter()
+                    .append("span") 
+                    .text(function (d, i) { 
+                        return d; 
+                    })
+                    .style("color", function(d, i) {
+                        // if the data type of the array value is a string then the value is displayed in blue
+                        if (typeof d == "string") {
+                            return "blue";
+                        }
+                        // if the data type of the array value is a number, then the value is displayed in green
+                        if (typeof d == "number") {
+                            return "green"
+                        }
+                    }); 
+    </script> 
+</body> 
+</html> 

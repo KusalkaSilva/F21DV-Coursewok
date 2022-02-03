@@ -1,0 +1,80 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 21/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab1 - Exercise 12</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+<script>
+    //Create SVG element 
+    var svg = d3.select("body") 
+        .append("svg") 
+        .attr("width",  400) 
+        .attr("height", 400) 
+        .style("border", '1px solid green');
+    
+    var csvfile = "./Files/Exercise12.csv";
+
+        // reads csv file
+        d3.csv(csvfile).then(function(data){
+
+        data.forEach(function(d){
+
+        //if the shape in csv file equals to rectangle then append rectangle element 
+        if(d["shape"] == "rectangle"){
+            svg.append("rect") 
+                .attr("x", d["positionX"]) //starting x point of the rectangle
+                .attr("y", d["positionY"]) //starting y point of the rectangle
+                // dimensions of the rectangle
+                .attr("width", d["width"]) 
+                .attr("height", d["height"])
+                // fill color 
+                .attr("fill", d["color"]); 
+        }
+
+        //if the shape in csv file equals to circle then append circle element 
+        if(d["shape"] == "circle"){
+            svg.append("circle")
+                // cordinates of the starting point of the circle 
+                .attr("cx", d["positionX"]) 
+                .attr("cy", d["positionY"]) 
+                //radius
+                .attr("r", d["width"])
+                // fill color 
+                .attr("fill", d["color"]);
+        }
+        //if the shape in csv file equals to line then append line element 
+        if(d["shape"] == "line"){
+            svg.append("line") 
+                // coordinates of the line
+                .attr("x1", d["positionX"]) 
+                .attr("x2", d["width"]) 
+                .attr("y1", d["positionY"]) 
+                .attr("y2", d["height"])
+                // color 
+                .attr("stroke", d["color"]) 
+        }
+        //if the shape in csv file equals to eclipse then append eclipse element 
+        if(d["shape"] == "eclipse"){
+            svg.append("ellipse") 
+                // starting positions
+                .attr("cx", d["positionX"]) 
+                .attr("cy", d["positionY"]) 
+                .attr("rx", d["width"]) //x-axis radius
+                .attr("ry", d["height"]) //y-axis raduis
+                // fill color
+                .attr("fill", d["color"]);
+        }
+
+        })
+        
+    }) 
+</script> 
+</body> 
+</html> 

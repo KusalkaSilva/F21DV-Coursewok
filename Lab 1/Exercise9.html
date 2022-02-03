@@ -1,0 +1,68 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 16/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab1 - Exercise 9</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+    <script> 
+ 
+        
+        //csv data is assigned to a variable
+        let titaniccsv = 'https://raw.githubusercontent.com/dsindy/kaggle-titanic/master/data/test.csv'; 
+        /* 
+        PassengerId,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked 
+        892,3,"Kelly, Mr. James",male,34.5,0,0,330911,7.8292,,Q 
+        893,3,"Wilkes, Mrs. James (Ellen Needs)",female,47,1,0,363272,7,,S 
+        894,2,"Myles, Mr. Thomas Francis",male,62,0,0,240276,9.6875,,Q 
+        895,3,"Wirz, Mr. Albert",male,27,0,0,315154,8.6625,,S 
+        */ 
+    
+        //var count_of_Others = {};
+        
+        //reads the csv file
+        d3.csv(titaniccsv).then(function(data){
+
+            //total number of records in the csv file 
+            var num = data.length;
+
+            //using regex to get the number of names that include "Mr." and "Mrs."
+            // filter the records based on the condition
+            count_of_Mr = data.filter(function(rows){
+                return rows.Name.match(/.*Mr.*/)
+            })
+
+             count_of_Mrs= data.filter(function(rows){
+                return rows.Name.match(/.*Mrs.*/)
+            })
+
+            //substracting the number of Mr, and Mrs from the total number of records to get the number of names that include other titles
+            count_of_Others = num - (count_of_Mr.length + count_of_Mrs.length);
+
+            console.log("Count of Mr = " +count_of_Mr.length);
+            console.log("Count of Mrs = " +count_of_Mrs.length);
+            console.log("Count of Other titles = " +count_of_Others);
+
+            //returns an array where the Sex is "male" 
+            genderMale = data.filter(function(rows){
+                return rows.Sex == "male";
+            })
+            // returns an array where the Sex is "female"
+            genderFemale = data.filter(function(rows){
+                return rows.Sex == "female";
+            })
+
+            console.log("Number of males = " +genderMale.length);
+            console.log("Number of females = " +genderFemale.length);
+
+        });
+
+    </script> 
+</body> 
+</html> 

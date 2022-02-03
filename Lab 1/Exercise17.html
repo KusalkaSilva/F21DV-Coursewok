@@ -1,0 +1,76 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 22/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab1 - Exercise 17</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+    <script> 
+        const data = [50, 400, 300, 900, 250, 1000] 
+         
+        const width     = 600; 
+        const barHeight = 20; 
+        const margin    = 1; 
+         
+        var scale = d3.scaleLinear() 
+               .domain([d3.min(data), d3.max(data)]) //(50,1000) //represent the min and max value
+               .range([50, 500]); //min value is mapped to 50, and max value is mapped to 500
+        
+        // Create SVG element
+        var svg = d3.select("body") 
+                .append("svg") 
+                .attr("width", width) 
+                .attr("height", barHeight*data.length); 
+        
+        // g element groups SVG shapes together
+        var g = svg.selectAll("g") 
+                .data(data) 
+                .enter() 
+                .append("g") 
+                .attr("transform", function (d, i) { 
+                  return "translate(0," + i * barHeight + ")"; //(x position, y position)
+                }); 
+        
+        // Add rectangle
+        g.append("rect")
+            // dimensions
+           .attr("width", function (d) { 
+             return scale(d); 
+           }) 
+           .attr("height", barHeight - margin)
+           // fill color
+           .attr('fill', function(d){
+               // if value is less than and equal to 100 then the fill color is green
+               if(d <= 100){
+                   return "green";
+               }
+               // if value is greater than and equal to 500 then the fill color is red
+               else if(d >= 500){
+                   return "red";
+               }
+               // if both the above conditions doesn't satisfy then the fill color is blue
+               else{
+                   return "blue";
+               }
+           })  
+        
+        // Add text
+        g.append("text")
+            // text position 
+           .attr("x", function (d) { 
+               return (scale(d)); 
+            }) 
+           .attr("y", barHeight / 2+5)
+           //.style('text-anchor', 'end') 
+           .text(function (d) { 
+               return d; 
+            }); 
+    </script> 
+</body> 
+</html> 

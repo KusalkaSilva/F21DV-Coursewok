@@ -1,0 +1,26 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 11/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab1 - Exercise 5</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+ 
+<script> 
+    var bodyElement = d3.select("body"); 
+    var div = bodyElement.append("div"); 
+    div.text("Hello World!"); 
+ 
+    // Chain Syntax
+    // same as above
+    //selects the "body" tag, and add a "div" element and gives the text as "Hello World" and sets the font color as "green"
+    d3.select("body").append("div").text("Hello World!").style("color", "green"); 
+</script> 
+</body> 
+</html> 

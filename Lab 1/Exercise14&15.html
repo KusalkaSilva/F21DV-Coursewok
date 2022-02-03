@@ -1,0 +1,114 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 21/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab1 - Exercise 14 & 15</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script>
+    <style> 
+        /*svg rect { 
+                    fill: orange; 
+        } */
+         
+        svg text { 
+                    fill:black; 
+                    font: 15px sans-serif; 
+                    /* text-anchor: end; */ 
+        } 
+    </style>
+</head> 
+<body> 
+    <script> 
+
+    let heartfailurecsv = 'https://raw.githubusercontent.com/akmand/datasets/master/heart_failure.csv'; 
+       
+        // default array to hold the number of patients within the age range ['1-30', '31-40', '41-60', '61-100']
+        // default count is set as 0 for all 4 age ranges
+        var age = [0, 0, 0, 0];
+
+
+        d3.csv(heartfailurecsv).then(function(data) { 
+
+            // reads the csv file line by line
+            data.forEach(function(rows){
+                
+                //if the age is between 1 and 30 (inclusive) 
+                if(rows.age >=1 && rows.age <=30){
+                    //current value at index 0 in age array is incremented by 1
+                    age[0] = age[0] + 1;
+                }
+                //if the age is between 31 and 40 (inclusive)
+                else if(rows.age >= 31 && rows.age <=40){
+                    //current value at index 1 in age array is incremented by 1
+                    age[1] = age[1] + 1;
+                }
+                //if the age is between 41 and 60 (inclusive)
+                else if(rows.age >= 41 && rows.age <=60){
+                    //current value at index 2 in age array is incremented by 1
+                    age[2] = age[2] + 1;
+                }
+                //if the age is between 61 and 100 (inclusive)
+                else if(rows.age >= 61 && rows.age <=100){
+                    //current value at index 3 in age array is incremented by 1
+                    age[3] = age[3] + 1;
+                }
+
+            }) 
+         
+            var width       = 500; 
+            var scaleFactor = 3; 
+            var barHeight   = 30; 
+              
+            //Create SVG element
+            var graph = d3.select("body") 
+                  .append("svg") 
+                  .attr("width", width) 
+                  .attr("height", barHeight * age.length + 20)
+                  .style("border", '1px solid black'); 
+              
+            // <g> SVG element is used to group SVG shapes together
+            var bar = graph.selectAll("g") 
+                  .data(age) 
+                  .enter() 
+                  .append("g") 
+                  .attr("transform", function(d, i) { 
+                    return "translate(0, " + i * 30 + " )"; //(x-axis spacing, y-axis spacing)
+                  }); 
+              
+            bar.append("rect")
+            // dimenstions of the rectangles 
+              .attr("width", function(d) { 
+                  return d*scaleFactor; 
+              }) 
+              .attr("height", barHeight)
+              //------------------------------EXERCISE 15 -------------------
+              // fill color
+              .attr("fill", function(d){
+                  // if the values are greater than 150, then the rect is red color
+                  if(d>150){
+                      return "red";
+                  }
+                  // if not, the color is orange
+                  else{
+                      return "orange";
+                  }
+              });
+              
+            bar.append("text") 
+              // position of the text
+              .attr("x", function(d) { 
+                  return (d*scaleFactor);
+                }) 
+              .attr("y", barHeight/2+5)
+              .style("font-size", "15")
+              .text(function(d) { 
+                  return d; 
+            }); 
+        });
+        </script> 
+</body> 
+</html> 

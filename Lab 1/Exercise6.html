@@ -1,0 +1,44 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 11/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab1 - Exercise 6</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+ 
+    <div></div> 
+    <div></div> 
+    <div></div>
+    <!-- Added an additional div element to display the color variable -->
+    <!-- If this <div> element isn't added then "color" will not be displayed in the browser-->
+    <div></div> 
+     
+    <script> 
+    let otherdata = [ {name:'test',  val:1},  
+                      {name:'other', val:2}, 
+                      {name:'b',     val:3},
+                      // added a color variable with the value '4' to 'otherdata' array
+                      {name:'color', val:4} ];
+     
+    let paragraph = d3.select("body")
+                    .selectAll("div")
+                    //each value of the "otherdat" array is passesd as arguments  
+                    .data(otherdata) 
+                    .text(function (d, i) { 
+                        console.log("d.name: " + d.name); 
+                        console.log("d.val:  " + d.val); 
+                        console.log("i: " + i); 
+                        console.log("this: " + this); 
+     
+                        return 'cont:' + d.name; // return is used to set the 'text'
+                    }); 
+    </script>
+</body> 
+</html> 
+

@@ -1,0 +1,87 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 28/01/2022 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>F21DV Lab1 - Exercise 23</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script>
+</head>
+<body>
+<script>
+    // Set Dimensions
+    const xSize = 600; 
+    const ySize = 600;
+    const margin = 30;
+    const xMax = xSize - margin*2;
+    const yMax = ySize - margin*2;
+
+    var csvfile = "./Files/Exercise23.csv";
+
+   
+    // reads external csv file
+    d3.csv(csvfile).then(function(data){
+
+        // Get the 'limits' of the data - the full extent (mins and max)
+        // so the plotted data fits perfectly
+        const xExtent = d3.extent( data, d=>{ return d.x } ); //returns the min and max of x
+        const yExtent = d3.extent( data, d=>{ return d.y } ); //returns min and max of y
+
+        // Append SVG Object to the Page
+        const svg = d3.select("body")
+            .append("svg")
+            .attr('width', xSize )
+            .attr('height', ySize )
+            .append("g")
+            .attr("transform","translate(" + margin + "," + margin + ")");
+
+        // X Axis
+        const x = d3.scaleLinear()
+            .domain([ xExtent[0], xExtent[1] ]) //xExtent[0] = min value of x 
+                                                //xExtent[1] = max value of x
+            .range([0, xMax]);
+
+        // bottom x axis
+        svg.append("g")
+            .attr("transform", "translate(0," + yMax + ")")
+            .call(d3.axisBottom(x))
+            //.attr('color', 'green'); // make bottom axis green
+
+        // top x axis
+        svg.append("g")
+            .call(d3.axisTop(x));
+
+        // Y Axis
+        const y = d3.scaleLinear()
+            .domain([ yExtent[0], yExtent[1] ]) //yExtent[0] = min value of y 
+                                                //yExtent[1] = max value of y
+            .range([ yMax, 0]);
+
+        // left y axis
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+        // right y axis
+        svg.append("g")
+            .attr("transform", `translate(${yMax},0)`)
+            .call(d3.axisRight(y));
+
+        // Add the line
+        svg.append("path")
+            .datum(data) //.datum binds data directly into an element
+            .attr("fill", "none")
+            .attr("stroke", "steelblue") //line color
+            .attr("stroke-width", 2.5) // line thickness
+            // plotting data points
+            .attr("d", d3.line()
+                    .x(function(d) { return x(d.x) })
+                    .y(function(d) { return y(d.y) })
+            );
+    });
+
+</script>
+</body>
+</html>

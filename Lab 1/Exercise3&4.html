@@ -1,0 +1,52 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 11/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>
+    <title>F21DV Lab1 - Exercise 3 & 4</title> 
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+<script> 
+// ------------------------------------------------- EXERCISE 3 CODE -------------------------------------------------------------------
+
+    // For loop to add 10 div elelemts
+    for(let count=1; count<=10; count++){
+        // Used an if statement to name the class as "red" for first 5 elements
+        if(count <= 5){
+            //selecting body tag
+            d3.select("body")
+            // adding div element to the end of the body tag
+            .append("div")
+            // naming the class name as "red" for "div" element
+            .attr("class", "red")
+            // value of the count is displayed as the text content for that particular div element
+            .text(count);
+        }
+        // Else statement to name the class as "green" for the last five elements
+        else{
+            d3.select("body")
+            // adding "div" element to the end of body tag
+            .append("div")
+            // naming the class name of the last 5 div elements as "green"
+            .attr("class", "green")
+            .text(count);
+        }
+    }
+
+    // selecting all the elements with the class name "red", and changing the text color to red
+    d3.selectAll(".red").style("color", "red");
+    // selecting all the elements with the class name "green", and changing the text to green
+    d3.selectAll(".green").style("color", "green");
+
+// ------------------------------------------------- EXERCISE 4 CODE -------------------------------------------------------------------
+
+    //selects the first div element, and changes it text to Start and the font color to purple
+    d3.select("div").text("Start").style("color", "purple");
+</script> 
+</body> 
+</html> 

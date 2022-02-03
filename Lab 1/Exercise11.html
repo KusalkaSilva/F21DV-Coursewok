@@ -1,0 +1,55 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 21/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+   <title>F21DV Lab1 - Exercise 11</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+ 
+<script> 
+    //Create SVG element 
+    var svg = d3.select("body") 
+    .append("svg") 
+    .attr("width",  400) 
+    .attr("height", 400) 
+    .style("border", '1px solid green'); 
+ 
+    //Create line element inside SVG with different coordinates, so the lines will form a square shape
+    
+    svg.append("line") 
+       .attr("x1", 150) 
+       .attr("x2", 250) 
+       .attr("y1", 150) 
+       .attr("y2", 150) 
+       .attr("stroke", "blue") //line color
+    
+    svg.append("line") 
+       .attr("x1", 150) 
+       .attr("x2", 250) 
+       .attr("y1", 250) 
+       .attr("y2", 250) 
+       .attr("stroke", "red") 
+
+    svg.append("line") 
+       .attr("x1", 150) 
+       .attr("x2", 150) 
+       .attr("y1", 150) 
+       .attr("y2", 250) 
+       .attr("stroke", "green") 
+    
+    svg.append("line") 
+       .attr("x1", 250) 
+       .attr("x2", 250) 
+       .attr("y1", 150) 
+       .attr("y2", 250) 
+       .attr("stroke", "orange") 
+</script> 
+</script> 
+</body> 
+</html> 

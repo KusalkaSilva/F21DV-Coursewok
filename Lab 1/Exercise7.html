@@ -1,0 +1,41 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 1
+    Date - 16/01/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>
+    <title>F21DV Lab1 - Exercise 7</title> 
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+    <div></div> 
+    <div></div> 
+    <div></div> 
+    <div></div> 
+    
+    <script> 
+    let num = [10, 50, 100, 200]; 
+    
+    let paragraph = d3.select("body") 
+                    .selectAll("div")
+                    //each value of the "num" array is passesd as arguments
+                    .data(num) 
+                    .text(function (d, i) { 
+                        return 'cont:' + d; // return is used to set the 'text' 
+                    }) 
+                    .style("color", function(d, i) { 
+                        // if the following condition satisfies then the value is displayed in red, if not it is displayed in yellow
+                        // values between 50 and 100 (inclusive) are displayed in red and other's are displayed in yellow
+                        if ( d >=50 && d <= 100 ) { 
+                            return "red"; 
+                        } else { 
+                            return "yellow"; 
+                        } 
+                        return 'blue'; 
+                    });    
+    </script> 
+</body> 
+</html> 

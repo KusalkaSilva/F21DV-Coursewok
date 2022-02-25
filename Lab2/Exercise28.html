@@ -1,0 +1,59 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 19/02/2022 
+-->
+
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab2 - Exercise 28</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+    <script>
+        //dimensions for svg
+        var width = 400, height = 400; 
+         
+        // setup svg 
+        d3.select('body').append('svg').attr('width',width).attr('height',height); 
+         
+        // generate 100 random data 
+        var numNodes = 100; 
+        var nodes = d3.range(numNodes).map(function(d) { 
+         return {radius: Math.random() * 25} //define radius
+        }) 
+         
+        var simulation = d3.forceSimulation(nodes) 
+              .force('charge', d3.forceManyBody().strength(5)) //makes element repel(-) or attract(+) to each other
+              .force('center', d3.forceCenter(width / 2, height / 2)) //define the center point
+              .force('collision', d3.forceCollide().radius(function(d) {  //stop elements intersecting
+                  return d.radius 
+              })) 
+              .on('tick', ticked); 
+
+        var color = d3.scaleOrdinal().range(d3.schemeSet3); //color scale
+          
+        function ticked() { 
+          var u = d3.select('svg') //container
+            .selectAll('circle') //type of element that wll be joined
+            .data(nodes) //array that's being joined
+            .join('circle') //circle elements added
+            .attr('fill', function(d) {
+                return color(d)
+            }) 
+            .attr('r', function(d) { //radius
+              return d.radius 
+            }) 
+            //position
+            .attr('cx', function(d) { 
+              return d.x 
+            }) 
+            .attr('cy', function(d) { 
+              return d.y 
+            }) 
+        } 
+    </script> 
+</body> 
+</html> 

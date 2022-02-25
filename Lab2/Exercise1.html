@@ -1,0 +1,143 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 11/02/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab2 - Exercise 1</title>
+    <style>
+        .pulse {
+         border: 1px solid blue;
+         fill: lightblue;
+         stroke: blue;
+         stroke-width: 2px;
+        }
+        /*when the mouse is over the circles*/
+        .pulse:hover
+        {
+        /* -webkit is a web browser rendering engine used by Chrome and Safari  */
+         -webkit-animation-name: pulsar;
+         -webkit-animation-duration: 1s;
+         -webkit-animation-iteration-count: infinite;
+         -webkit-animation-direction: alternate;
+         animation-name: pulsar;
+         animation-duration: 1s;
+         animation-iteration-count: infinite;
+         animation-direction: alternate;
+         -webkit-transform-origin: 50% 50%;
+         transform-origin: 50% 50%;
+        }
+        /*Animation function*/
+         @keyframes pulsar {
+         from {
+         fill: red;
+         }
+         to {
+         fill: red;
+         /* this property gives the pulsing effect*/
+         transform: scale(1.3); /* Equal to scaleX(1.3) scaleY(1.3) */
+         }
+        }
+       
+    </style>
+    <script src='https://d3js.org/d3.v7.min.js'></script>
+    
+</head> 
+<body> 
+    <script> 
+
+        // LINE CHART //
+
+        // Set Dimensions 
+        const xSize  = 600;   
+        const ySize  = 600; 
+        const margin = 30; 
+        const xMax   = xSize - margin*2; 
+        const yMax   = ySize - margin*2; 
+    
+        //data points to plot the line graph
+        const data = [
+            {x: 1, y: 1},
+            {x: 2, y: 6},
+            {x: 3, y: 2},
+            {x: 4, y: 7},
+            {x: 5, y: 3},
+            {x: 6, y: 5},
+            {x: 7, y: 1},
+            {x: 8, y: 7}
+            ];
+             
+        // Get the 'limits' of the data - the full extent (mins and max) 
+        // so the plotted data fits perfectly  
+        const xExtent = d3.extent( data, d=>{ return d.x } ); //returns the min and max of x
+        const yExtent = d3.extent( data, d=>{ return d.y } ); //returns the min and max of y
+                
+        // Append SVG Object to the Page 
+        const svg = d3.select("body") 
+                    .append("svg") 
+                    .attr('width',  xSize) 
+                    .attr('height', ySize) 
+                    .append("g") 
+                    .attr("transform","translate(" + margin + "," + margin + ")"); 
+                
+        // X Axis 
+        const x = d3.scaleLinear() 
+                    .domain([ xExtent[0], xExtent[1] ]) //xExtent[0] = min value of x 
+                                                        //xExtent[1] = max value of x
+                    .range([0, xMax]); 
+                
+        // bottom x axis
+        svg.append("g") 
+        .attr("transform", "translate(0," + yMax + ")") 
+        .call(d3.axisBottom(x)) 
+        //.attr('color', 'green'); // make bottom axis green 
+                
+        // top x axis
+        svg.append("g") 
+        .call(d3.axisTop(x)); 
+                
+        // Y Axis 
+        const y = d3.scaleLinear() 
+                    .domain([ yExtent[0], yExtent[1] ]) //yExtent[0] = min value of y
+                                                        //yExtent[1] = max value of y
+                    .range([ yMax, 0]); 
+                
+        // left y axis 
+        svg.append("g") 
+            .call(d3.axisLeft(y)); 
+                
+        // right y axis 
+        svg.append("g") 
+            .attr("transform", `translate(${yMax},0)`) 
+            .call(d3.axisRight(y)); 
+                
+        // Add the line 
+        svg.append("path") 
+            .datum(data) //.datum binds data directly into an element
+            .attr("fill", "none") 
+            .attr("stroke", "steelblue") // line color
+            .attr("stroke-width", 2.5) 
+            // plotting  data points
+            .attr("d", d3.line() 
+                        .x(function(d) { return x(d.x)  }) 
+                        .y(function(d) { return y(d.y)  }) 
+            ); 
+    
+            // Plotting a dot plot - circle as the shape of the dot
+        svg.selectAll("dot") 
+            .data(data) //applies values of the data array to the selected element
+            .enter() 
+            .append("circle")
+            // css styles under pulse will be applied to the cicrcles 
+            .attr("class", "pulse") 
+            // x,y co-ordinates of the dots 
+            .attr("cx", function (d) { return x(d.x) } ) 
+            .attr("cy", function (d) { return y(d.y) } ) 
+            .attr("r", 10) // radius
+            
+        </script> 
+</body> 
+</html> 

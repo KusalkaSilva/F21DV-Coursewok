@@ -1,0 +1,43 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 11/02/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab2 - Exercise 4</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+    <script> 
+        // Create svg element
+        var svg = d3.select('body') 
+                    .append('svg') 
+                    .attr('width', '400px') 
+                    .attr('height', '400px') 
+                    .style('border', '1px solid black'); 
+        
+        // Create circle
+        svg.append("circle")
+            .attr("cx", "200px")
+            .attr("cy", "200px")
+            .attr("r", "70")
+            .style("fill", "yellowgreen")
+     
+        // mouse events for "circle" svg element
+        d3.selectAll("circle") 
+          .on("mouseover", function(event){ 
+              d3.select(this) 
+                .style("fill", "crimson") //change color
+                .attr("r", "120") //change radius
+          }) 
+          .on("mouseout", function(){ 
+              d3.select(this) 
+              .attr("r", "70") //default radius
+              .style("fill", "yellowgreen") //default color
+          }); 
+    </script> 
+</body> 
+</html> 

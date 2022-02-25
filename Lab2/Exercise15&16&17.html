@@ -1,0 +1,185 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 15/02/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab2 - Exercise 15 & 16 & 17</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script>
+    <style> 
+        /* style properties for rectangles(.bar class)*/
+        rect { 
+            fill: yellowgreen;
+            stroke: black;
+            stroke-width: 1.5px; 
+        } 
+         
+        .min_range { 
+            fill: blue;
+            stroke: black;
+            stroke-width: 1.5px;  
+        } 
+
+        .max_range { 
+            fill: red;
+            stroke: black;
+            stroke-width: 1.5px;  
+        } 
+    </style>  
+</head> 
+<body> 
+
+    <svg width="600" height="600"></svg> 
+ 
+    <script> 
+        var svg = d3.select("svg"); 
+        var margin = 200; 
+        var width  = svg.attr("width") - margin; 
+        var height = svg.attr("height") - margin; 
+        
+        // add text
+        svg.append("text") 
+            //text position
+            .attr("x", 200) 
+            .attr("y", 50) 
+            .attr("font-size", "24px") 
+            .attr("letter-spacing", "0.2em") //spacing b/w letters
+            .attr("stroke", "black") //text outline color
+            .text("Stock Price") 
+        
+        // read csv file
+        d3.csv( "Exercise15.csv" ).then(function(data) {  
+
+            //scaleBand splits the range into 6 bands (no. of values in the domain array)
+            var x = d3.scaleBand().domain( data.map(function(d) { return d.year; }) ).range([0, width]).padding(0.4); 
+            var y = d3.scaleLinear().domain([0, d3.max(data, function(d) { return d.value; })]).range([height, 0]); 
+        
+            var g = svg.append("g") 
+                    .attr("transform", "translate(" + 100 + "," + 100 + ")"); //x position, y position of the graph
+        
+                // Display x-axis
+                g.append("g") 
+                .attr("transform", "translate(0," + height + ")") 
+                .attr("stroke-width", 2) //mycode
+                .call(d3.axisBottom(x)) 
+                // x-axis label
+                .append("text") 
+                // text position
+                .attr("y", height - 350) 
+                .attr("x", width - 180) 
+                .attr("text-anchor", "end") 
+                .attr("stroke", "black") 
+                .attr("letter-spacing", "0.2em")
+                .style("font-size", 15)
+                .text("Year"); 
+        
+                // Display y-axis
+                g.append("g")
+                .attr("stroke-width", 2) 
+                .call(d3.axisLeft(y).tickFormat(function(d){ 
+                    return "$" + d; //y axis values
+                }).ticks(10))
+                // y-axis lable
+                .append("text") 
+                .attr("transform", "rotate(-90)") //rotate vertically
+                //text position
+                .attr("y", -50)
+                .attr("x", -80) 
+                .attr("stroke", "black") // text outline color
+                .attr("letter-spacing", "0.2em") //spacing b/w letters
+                .style("font-size", 15) //font size
+                .text("Stock Price"); 
+        
+                // Plotting the bar chart using rect svg shapes
+                g.selectAll("rect") 
+                .data(data) 
+                .enter()
+                .append("rect") 
+                //.attr("class", "bar") 
+                //.on(..... ) – call mouse events here... 
+                .on("mouseover", onMouseOver) //Add listener for the mouseover event 
+                .on("mouseout", onMouseOut)   //Add listener for the mouseout event 
+                .attr("x", function(d) { return x(d.year); }) 
+                .attr("y", function(d) { return y(d.value); }) 
+                .attr("width", x.bandwidth()) //.bandwidth gets the width of the band
+                //add transition 
+                .transition() 
+                .ease(d3.easeLinear) //transition type
+                .duration(400) // transition duration (0.4s)
+                .delay(function (d, i) { //delay for each .bar
+                    return i * 50; 
+                })  
+                .attr("height", function(d) { return height - y(d.value); }); 
+        
+
+            //mouseover event handler function 
+            function onMouseOver(d, i) { 
+    
+                //bars that meet this condition, the class name is given as 'min_range'
+                //So, the css style under this class will be applied to the rectangles
+                if(i.value <= 55){
+
+                    d3.select(this)
+                    .attr('class', 'min_range');
+                    
+                }
+                else{
+                    d3.select(this)
+                    .attr('class', 'max_range'); //css styles under this class will applied to the rectangles that doesn't statisfy the condition
+                }
+                
+                d3.select(this)                                                   
+                .transition() // adds transition 
+                .duration(400) // transition duration (0.4s)
+                .attr('width', x.bandwidth()+5) 
+                .attr("y", function(d) { return y(d.value)-10; }) 
+                .attr("height", function(d) { return height - y(d.value)+10; }); 
+        
+                //text svg element
+                g.append("text") 
+                    .attr('class', 'value') //class name 
+                    // text position
+                    .attr('x', function() { 
+                        return x(i.year); 
+                    }) 
+                    .attr('y', function() { 
+                        return y(i.value) - 20; 
+                    })
+                    // text color 
+                    .style("fill", function(){
+                        // text color based on the value
+                        if(i.value <=55){
+                            return "blue"
+                        }
+                        else{
+                            return "red"
+                        }
+                    })
+                    .text( function(d) { return '$' + i.value; } ); // Value of the text
+                
+            } 
+ 
+            //mouseout event handler function 
+            function onMouseOut(d, i) { 
+                // use the text label class to remove label on mouseout 
+                d3.select(this).attr('class', 'bar'); 
+                d3.select(this) 
+                .transition()     // adds transition
+                .duration(400) 
+                .attr('width', x.bandwidth()) 
+                .attr("y", function(d) { return y(i.value); }) 
+                .attr("height", function(d) { return height - y(i.value); }); 
+        
+                // remove text elements (.value class name)
+                d3.selectAll('.value') 
+                .remove() 
+            }      
+
+        });
+        
+    </script> 
+</body> 
+</html> 

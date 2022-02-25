@@ -1,0 +1,37 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 11/02/2022 
+-->
+
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab1 - Exercise 6 & 7</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+ 
+<script> 
+    d3.select('body') 
+    .append("div") 
+    .style('width',  '100px') 
+    .style('height', '100px') 
+    .style('background-color', 'blue') 
+    // add transition
+    .transition()
+    // 1 second 
+    .duration(1000) //transition duration
+    .style("background-color", "red")
+    .transition()
+    // 2 second
+    .duration(2000)
+    .style("background-color", "green") //changes color to green
+    //changes the dimension
+    .style('width',  '200px') 
+    .style('height', '200px') ; 
+
+</script> 
+</body> 
+</html> 

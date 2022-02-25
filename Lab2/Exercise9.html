@@ -1,0 +1,57 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 11/02/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab1 - Exercise 9</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+    <script> 
+        d3.select('body') 
+          .append("div")
+          .style('width',  '100px') 
+          .style('height', '100px') 
+          .style('background-color', 'blue') 
+          .style('transform', 'scale(1.0)') 
+          .transition() 
+          .ease( d3.easeBounce ) //transition type
+          .duration(2000) // transition duration
+          .style("background-color", "red") 
+          .style('transform', 'scale(0.5)')
+
+        d3.select('body')
+          .append("div")
+          .style("width", "100px")
+          .style("height", "100px")
+          .style("margin-top", "10px")
+          .style('background-color', 'yellowgreen') 
+          .style('transform', 'scale(1.0)')
+          .transition() 
+          .ease( d3.easeElastic ) 
+          .duration(2000)
+          .delay(2000) //after 2000ms the transition will start
+          .style("background-color", "red") 
+          .style('transform', 'scale(0.5)')  
+
+        d3.select('body')
+          .append("div")
+          .style("width", "100px")
+          .style("height", "100px")
+          .style("margin-top", "10px")
+          .style('background-color', 'crimson') 
+          .style('transform', 'scale(1.0)')
+          .transition() 
+          .ease( d3.easeCubic ) 
+          .duration(2000) 
+          .delay(4000)
+          .style("background-color", "red") 
+          .style('transform', 'scale(0.5)') 
+    </script> 
+         
+</body> 
+</html> 

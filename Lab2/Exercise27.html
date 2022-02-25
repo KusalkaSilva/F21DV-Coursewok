@@ -1,0 +1,96 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 19/02/2022 
+-->
+
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab2 - Exercise 27</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body>
+    <!-- Add buttons -->  
+    <button onclick="update('dataset')">Piechart 1</button> 
+    <button onclick="update('dataset1')">Piechart 2</button>
+
+    <script> 
+        // create 2 datasets
+        var dataset = { 
+           apples: [5345, 2879, 1997, 2437, 4045]
+        }; 
+
+        var dataset1 = {
+            oranges: [1000, 2500, 6000, 4500, 8000]
+        };
+
+         
+        var width = 350, 
+            height = 400, 
+            radius = Math.min(width, height) / 2; // radius of the pie chart
+                                                  //Math.min returns the lowest value 
+         
+        //colors scale
+        var color = d3.scaleOrdinal().range(d3.schemeSet3); 
+        var color1 =  d3.scaleSequential().domain([1,10]).interpolator(d3.interpolateRainbow);
+
+        // Append SVG Object to the Page         
+        var svg = d3.select("body").append("svg") 
+            .attr("width", width)  
+            .attr("height", height) 
+            .append("g") 
+            .attr("transform", "translate(" + width /2 + "," + height / 2 + ")"); 
+        
+        // Generate the pie 
+        var pie = d3.pie() 
+            .sort(null); 
+         
+        // Generate the arcs -> generates a doughnut chart
+        var arc = d3.arc() 
+            .innerRadius(radius - 100) 
+            .outerRadius(radius - 50); 
+         
+        function update(data){
+
+            // Generate groups based on the dataset
+            if(data == "dataset"){
+                var arcs = svg.selectAll("arc") 
+                .data(pie(dataset.apples)) }
+            else if(data == "dataset1"){
+                var arcs = svg.selectAll("arc") 
+                .data(pie(dataset1.oranges))
+            }
+            arcs
+            .enter() 
+            .append("path") //Draw arc paths
+            .merge(arcs) //merging the appended elements with the existing ones
+            // after this point, any updates will be applied to the merge of the appended and existing elements
+            .attr("fill", function(d, i) {
+                // assigning a different color to each pie chart using if statements 
+                if(data == "dataset"){
+                    return color(i); 
+                }
+                else if(data == "dataset1"){
+                    return color1(i);
+                }
+
+            }) 
+            .attr("d", arc) 
+            // add transition
+            .transition() 
+                    .duration(1000) //transition duration
+                    //same as transition, but here we define an interpolate function
+                    .attrTween("d", function (d) { 
+                        var i = d3.interpolate( d.endAngle, d.startAngle); 
+                        return function (t) { 
+                            d.startAngle = i(t); 
+                            return arc(d); 
+                        } 
+                    });
+            }
+            update("dataset")
+        </script> 
+</body> 
+</html> 

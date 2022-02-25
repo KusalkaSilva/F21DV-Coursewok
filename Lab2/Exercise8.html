@@ -1,0 +1,51 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 11/02/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab1 - Exercise 8</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+    <script> 
+        // Create div element
+        d3.select('body') 
+        .append("div") 
+        .style('width',  '100px') 
+        .style('height', '100px') 
+        .style('background-color', 'blue') 
+
+        // mouse event for div element
+        d3.selectAll("div") 
+            .on("mouseover", function(event){ 
+                d3.select(this) 
+                .transition()
+                // 1 second 
+                .duration(1000) 
+                .style("background-color", "red") //change to red
+                .transition()
+                // 2 second
+                .duration(2000)
+                .style("background-color", "green") //change to green
+                // change dimensions
+                .style('width',  '200px') 
+                .style('height', '200px') ; 
+                    
+            }) 
+            .on("mouseout", function(){ 
+                d3.select(this)
+                .transition()
+                .duration(1000)
+                // default size and color
+                .style('width',  '100px') 
+                .style('height', '100px') 
+                .style('background-color', 'blue')  
+                
+            }); 
+    </script> 
+</body> 
+</html> 

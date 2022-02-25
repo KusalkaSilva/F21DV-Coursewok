@@ -1,0 +1,156 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 11/02/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab2 - Exercise 2</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+    <style>
+    
+        /* animation function*/    
+        @keyframes animate{
+            from   {font-style:normal; fill:white;}
+            to  {font-style:italic; fill: black;}
+        }
+
+       /*style properties for the heading*/
+        h1{
+            font-family:'Lucida Grande';
+            margin-left: 50px;
+            margin-top: 30px;
+            color : darkmagenta;
+        }
+    
+        /*text svg*/
+        text{
+           display:none
+       }
+
+       /*css properties defined when mouse is moved over div container*/
+
+        #c1:hover  .text1{
+            display: block;
+            font-size: 16pt;
+            animation-name: animate;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            
+        }
+
+        #c2:hover  .text2{
+            display: block;
+            font-size: 16pt;
+            animation-name: animate;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+        }
+
+        #c3:hover  .text3{
+            display: block;
+            font-size: 16pt;
+            animation-name: animate;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+        }
+
+        #c4:hover  .text4{
+            display: block;
+            font-size: 14pt;
+            animation-name: animate;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+        }
+    </style>
+</head> 
+<body> 
+    <h1>Shapes</h1>
+    <!-- div elements for each shape -->
+    <div id="c1"></div>
+    <div id="c2"></div>
+    <div id="c3"></div>
+    <div id="c4"></div>
+
+    <script>
+        var svg = d3.select("#c1") //svg in <div> element with id = c1
+            .append("svg") 
+            .attr("width",  240) 
+            .attr("height", 140) 
+
+        // Rectangle
+        svg.append("rect") 
+            .attr("x", 15)
+            .attr("y", 25)
+            .attr("width", 200) 
+            .attr("height", 100)
+            .attr("fill", "crimson"); 
+
+        // Displaying text on hover
+        svg.append("text")
+            .attr("class", "text1")
+            .attr("x", 75)
+            .attr("y", 80)
+            .text("Rectangle")
+            
+        
+        var svg1 = d3.select("#c2") //svg in <div> element with id = c2
+            .append("svg") 
+            .attr("width",  240) 
+            .attr("height", 140)
+
+        //Circle
+        svg1.append("circle")
+            .attr("cx", 100) 
+            .attr("cy", 70) 
+            .attr("r", 70)
+            .attr("fill", "forestgreen");
+
+        // Displaying text on hover
+        svg1.append("text")
+            .attr("class", "text2")
+            .attr("x",75)
+            .attr("y", 75)
+            .text("Circle")
+
+        var svg2 = d3.select("#c3") //svg in <div> element with id = c3
+            .append("svg") 
+            .attr("width",  240) 
+            .attr("height", 140) 
+
+        // Eclipse
+        svg2.append("ellipse") 
+            .attr("cx", 100) 
+            .attr("cy", 70) 
+            .attr("rx", 90) 
+            .attr("ry", 50)
+            .attr("fill", "slateblue") 
+
+        // Displaying text on hover
+        svg2.append("text")
+            .attr("class", "text3")
+            .attr("x", 70)
+            .attr("y", 75)
+            .text("Eclipse")
+
+        var svg3 = d3.select("#c4") //svg in <div> element with id = c4
+            .append("svg") 
+            .attr("width",  240) 
+            .attr("height", 140) 
+
+        // Polygon
+        svg3.append("polygon") 
+            .attr('points', "10,10 160,10 210,60 210,110 20,10")
+            .attr("fill", "coral") 
+
+        // Displaying text on hover
+        svg3.append("text")
+            .attr("class", "text4")
+            .attr("x", 110)
+            .attr("y", 45)
+            .text("Polygon")
+    </script>
+</body> 
+</html> 

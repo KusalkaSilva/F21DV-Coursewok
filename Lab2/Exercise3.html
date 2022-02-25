@@ -1,0 +1,50 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 11/02/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab2 - Exercise 3</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+    <script> 
+        // Create div element
+        d3.select('body') 
+          .append('div') 
+          .style('width', '100px') 
+          .style('height', '20px') 
+          .style('background-color', 'green'); 
+     
+        // mouse events for div element
+        d3.selectAll("div") 
+          // when mouse is moved over the div
+          .on("mouseover", function(event){ 
+              d3.select(this) 
+                .style("background-color", "cyan")
+                .style("width", "200px")
+                .style("height", "100px")
+                .style("border", "12px dotted purple"); 
+     
+              // Get current event info 
+              // Note: d3.event  (event) passed as the first argument to all listeners 
+              console.log(event); 
+     
+              // Get x & y co-ordinates 
+              // Note: d3.mouse was removed in d3v6, you should use d3.pointer(event) 
+              console.log(d3.pointer(event)); 
+          })
+          // when mouse is moved out of the div 
+          .on("mouseout", function(){ 
+              d3.select(this) 
+                .style("background-color", "crimson") 
+                .style("width", "150px")
+                .style("height", "70px")
+                .style("border", "12px double yellowgreen"); 
+          }); 
+    </script> 
+</body> 
+</html> 

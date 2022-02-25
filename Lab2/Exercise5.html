@@ -1,0 +1,60 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 11/02/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab2 - Exercise 5</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+    <style>
+    
+      /* animation function*/    
+      @keyframes animate{
+          from   {fill:lightcoral;}
+          to  {fill: chartreuse;}
+      }
+
+     /*text svg*/
+      text{
+          display: block;
+          font-size: 16pt;
+          font-style: italic;
+          animation-name: animate;
+          animation-duration: 1.5s;
+          animation-iteration-count: infinite;
+        }
+    </style>
+</head> 
+<body> 
+    <script>
+      // Create svg elelment
+        var svg = d3.select('body') 
+                    .append('svg') 
+                    .attr('width', '400px') 
+                    .attr('height', '400px') 
+                    .style('border', '1px solid black')
+                    .style("background-color", "#333333")
+        
+      // create text svg element
+      var t = svg.append('text')
+        .text("Exercise 5")
+
+       // mouse event for svg element
+       d3.selectAll("svg")
+          .on("mousemove", function(event){ 
+
+            var coordinates = d3.pointer(event)
+
+              d3.select(this)
+              // changes the x,y position of the text element created to the pointer coordinates
+              t.attr("x", coordinates[0])
+              t.attr("y", coordinates[1])
+
+        })
+          
+    </script> 
+</body> 
+</html> 

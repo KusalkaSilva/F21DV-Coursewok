@@ -1,0 +1,151 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 15/02/2022 
+-->
+
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab2 - Exercise 23</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+    </head>
+<body> 
+    <!-- Add buttons --> 
+    <button onclick="update(data1)">Variable 1</button> 
+    <button onclick="update(data2)">Variable 2</button>
+
+    <script>
+        // create 2 datasets
+        const data1 = [
+        {x: 1, y: 5},
+        {x: 2, y: 1},
+        {x: 3, y: 5},
+        {x: 4, y: 1},
+        {x: 5, y: 5}
+        ];
+
+        const data2 = [
+        {x: 1, y: 1},
+        {x: 2, y: 6},
+        {x: 3, y: 2},
+        {x: 4, y: 7},
+        {x: 5, y: 3},
+        {x: 6, y: 5},
+        {x: 7, y: 1},
+        {x: 8, y: 7}
+        ];
+
+        // set the dimensions and margins of the graph
+        const margin = {top: 30, right: 30, bottom: 70, left: 60};
+        const width = 460 - margin.left - margin.right;
+        const height = 400 - margin.top - margin.bottom;
+
+        // append the svg object to the body of the page
+        var svg = d3.select('body')
+                    .append('div')
+                    .append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform",
+                    "translate(" + margin.left + "," + margin.top + ")");
+
+        
+        function update(data){
+
+            const xExtent = d3.extent( data, d=>{ return d.x } ); //returns the min and max of x
+            const yExtent = d3.extent( data, d=>{ return d.y } ); //returns min and max of y
+            
+            // Bottom X axis
+            var x = d3.scaleLinear()
+                    .domain([xExtent[0], xExtent[1]])
+                    .range([ 0, width ])
+
+            svg.append("g")
+                .attr("class", "baxis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x))
+
+            // Top X axis
+            svg.append("g")
+                .attr("class", "taxis")
+                .attr("transform", "translate(0," + (height-300) + ")")
+                .call(d3.axisTop(x));
+
+            // Left Y axis
+            var y = d3.scaleLinear().domain([yExtent[0], yExtent[1]]).range([ height, 0]);
+
+            svg.append("g")
+                .attr("class", "laxis")
+                .call(d3.axisLeft(y));
+
+            // Right Y axis
+            svg.append("g")
+                .attr("class", "raxis")
+                .attr("transform", "translate(370,0)")
+                .call(d3.axisRight(y));
+
+            //Updating the axes when transitioning from one linechart to another
+            svg.selectAll(".baxis")
+                .attr("transform", "translate(0," +height+")")
+                .call(d3.axisBottom(x))
+
+            svg.selectAll(".taxis")
+                .attr("transform", "translate(0," +(height-300)+")")
+                .call(d3.axisTop(x))
+
+            svg.selectAll(".laxis")
+                .call(d3.axisLeft(y))
+
+            svg.selectAll(".raxis")
+                .attr("transform", "translate(370,0)")
+                .call(d3.axisRight(y));
+
+            var u = svg.append("path")
+                    .datum(data)
+                    
+
+                u.enter()
+                    .append("path") //adding the missing elements
+                    .merge(u) //merging the appended elements with the existing ones
+                    // after this point, any updates will be applied to the merge of the appended and existing elements
+                    .transition()
+                    .duration(1000)
+                    .attr("class", "line") //add class name
+                    .attr("fill", "none") //no fill color
+                    .attr("stroke", function(){
+                        // assigning a different color to each line graph using if statements
+                        if(data == data1){
+                            return "crimson"
+                        }
+                        else if(data == data2){
+                            return "orange"
+                        }
+                        else{
+                            return "steelblue"
+                        }
+                    })
+                    .attr("stroke-width", 2.5) //line width
+                    //data point to plot the line graph
+                    .attr("d", d3.line()
+                                .x(function(d) { return x(d.x)})
+                                .y(function(d) { return y(d.y)}))
+
+                d3.selectAll(".line")
+                .datum(data)
+                .remove(); 
+            
+        }
+
+
+        // Initialize the plot with the first dataset
+        update(data1)
+                    
+
+       
+
+    </script>
+</body> 
+</html> 

@@ -1,0 +1,76 @@
+<!-- 
+    Kusalka Silva - H00389705
+    F21DV Lab 2
+    Date - 11/02/2022 
+-->
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>F21DV Lab2 - Exercise 12</title>
+    <script src='https://d3js.org/d3.v7.min.js'></script> 
+</head> 
+<body> 
+    <script> 
+        //Create svg element
+        var svg = d3.select("body")
+                    .append("svg")
+                    .attr("width", 500)
+                    .attr("height", 500);
+
+        //Create rectangle
+        var bar1 = svg.append("rect")
+                    .attr("fill", "blue") //color
+                    //position
+                    .attr("x", 100)
+                    .attr("y", 20)
+                    //dimensions
+                    .attr("height", 20)
+                    .attr("width", 10)
+
+        //Create rectangle
+        var bar2 = svg.append("rect")
+                    .attr("fill", "blue") //color
+                    //position
+                    .attr("x", 120)
+                    .attr("y", 20)
+                    //dimensions
+                    .attr("height", 20)
+                    .attr("width", 10)
+
+        //Create rectangle
+        var bar3 = svg.append("rect")
+                    .attr("fill", "blue") //color
+                    //position
+                    .attr("x", 140)
+                    .attr("y", 20)
+                    //dimensions
+                    .attr("height", 20)
+                    .attr("width", 10)
+
+        // calling update function
+        update();
+
+        //function
+        function update() {
+                //transition effect for bar1
+                bar1.transition()
+                    .ease(d3.easeLinear) //transition type
+                    .duration(2000) //2 seconds
+                    .attr("height",100)
+                //transition effect for bar2
+                bar2.transition()
+                    .ease(d3.easeLinear) //transition type
+                    .duration(2000) // 2 seconds
+                    .delay(2000) // start transition after 2 seconds
+                    .attr("height",100)
+                //transition effect for bar3
+                bar3.transition()
+                    .ease(d3.easeLinear) //transition type
+                    .duration(2000) // 2 seconds
+                    .delay(4000) // start transition after 4 seconds
+                    .attr("height",100)
+        }
+    </script> 
+</body> 
+</html> 
